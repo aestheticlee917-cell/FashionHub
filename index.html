@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionHub - Your Style Destination</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo" onclick="showPage('landing')">Fashion<span>Hub</span></a>
+
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showPage('landing')">Home</a></li>
+                    <li><a href="#" onclick="showPage('products')">Products</a></li>
+                    <li><a href="#" onclick="showPage('newarrival')">New Arrivals</a></li>
+                    <li><a href="#" onclick="showPage('sale')">Sale</a></li>
+                    <li><a href="#" onclick="showPage('aboutus')">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-icons">
+                <div class="icon" onclick="showWishlist()"><i class="far fa-heart"></i></div>
+                <div class="icon" onclick="showCart()"><i class="fas fa-shopping-cart"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Landing Page -->
+    <section id="landing" class="page active">
+        <div class="container">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Summer Collection 2023</h1>
+                    <p>Discover the latest trends in fashion. From casual wear to formal attire, we have everything you need to express your unique style.</p>
+                    <a href="#" class="btn" onclick="showPage('products')">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals Page -->
+    <section id="newarrival" class="page">
+        <div class="container">
+            <h2 class="section-title">New Arrivals</h2>
+            <div class="products-grid" id="newarrival-products">
+                <!-- new products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="feature-card fade-in">
+            <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+            <h3>Free Shipping</h3>
+            <p>Free shipping on orders over $50</p>
+        </div>
+
+        <div class="feature-card fade-in">
+            <div class="feature-icon"><i class="fas fa-undo-alt"></i></div>
+            <h3>Easy Returns</h3>
+            <p>30-day return policy for all items</p>
+        </div>
+
+        <div class="feature-card fade-in">
+            <div class="feature-icon"><i class="fas fa-lock"></i></div>
+            <h3>Secure Payment</h3>
+            <p>Your payment information is safe with us</p>
+        </div>
+
+        <div class="feature-card fade-in">
+            <div class="feature-icon"><i class="fas fa-headset"></i></div>
+            <h3>24/7 Support</h3>
+            <p>We're here to help you anytime</p>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products-grid" id="featured-products">
+                <!-- Featured products load here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Product List Page -->
+    <section id="products" class="page">
+        <div class="container">
+            <h2 class="section-title">All Products</h2>
+
+            <div class="page-controls">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Search products..." onkeyup="filterProducts()">
+                </div>
+
+                <div class="filter-sort">
+                    <select id="category-filter" onchange="filterProducts()">
+                        <option value="all">All Categories</option>
+                        <option value="shoes">Shoes</option>
+                        <option value="jackets">Jackets</option>
+                        <option value="tshirts">T-Shirts</option>
+                        <option value="pants">Pants</option>
+                        <option value="dresses">Dresses</option>
+                        <option value="accessories">Accessories</option>
+                    </select>
+
+                    <select id="sort-by" onchange="sortProducts()">
+                        <option value="default">Sort By</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="name">Name: A to Z</option>
+                        <option value="rating">Rating</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="all-products">
+                <!-- All products load here -->
+            </div>
+
+            <div class="pagination"></div>
+        </div>
+    </section>
+
+    <!-- Sale Page -->
+<section id="sale" class="page">
+    <div class="container">
+        <h2 class="section-title">Sale</h2>
+        <div class="products-grid" id="sale-products">
+            <!-- Sale products will be loaded here -->
+        </div>
+    </div>
+</section>
+    <!-- Product Detail Page -->
+    <section id="product-detail" class="page">
+        <div class="container">
+            <div class="product-detail" id="product-detail-content"></div>
+
+            <div class="product-tabs">
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('description')">Description</div>
+                    <div class="tab" onclick="switchTab('specifications')">Specifications</div>
+                    <div class="tab" onclick="switchTab('reviews')">Reviews</div>
+                </div>
+
+                <div id="description" class="tab-content active">
+                    <p id="product-full-description"></p>
+                </div>
+
+                <div id="specifications" class="tab-content">
+                    <table id="product-specs"></table>
+                </div>
+
+                <div id="reviews" class="tab-content">
+                    <div class="reviews-list" id="product-reviews"></div>
+                </div>
+            </div>
+
+            <div class="related-products">
+                <h2 class="section-title">Related Products</h2>
+                <div class="products-grid" id="related-products"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Page -->
+<section id="aboutus" class="page">
+    <div class="container aboutus-container">
+        <!-- JS will fill the content here -->
+    </div>
+</section>
+
+<!-- Wishlist Page -->
+<section id="wishlist-page" class="page">
+    <div class="container">
+        <h2 class="section-title">My Wishlist</h2>
+        <div class="products-grid" id="wishlist-items"></div>
+    </div>
+</section>
+
+<!-- Cart Page -->
+<section id="cart-page" class="page">
+    <div class="container">
+        <h2 class="section-title">My Shopping Cart</h2>
+        <div id="cart-items"></div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FashionHub</h3>
+                    <p>Your one-stop destination for all your fashion needs. Quality clothing, great prices, and excellent service.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('landing')">Home</a></li>
+                        <li><a href="#" onclick="showPage('products')">Products</a></li>
+                        <li><a href="#" onclick="showPage('aboutus')">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Payment Methods</a></li>
+                        <li><a href="#">Track Your Order</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest fashion trends and exclusive offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 FashionHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
