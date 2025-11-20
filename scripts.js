@@ -275,18 +275,22 @@ let cart = [];
 let wishlist = [];
 
 function showPage(pageId) {
-    // Hide all page screens
+    // Hide all pages
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
-        page.style.display = "none";
+        page.style.display = 'none';
     });
 
-    // Show selected page
+    // Show target page
     const target = document.getElementById(pageId);
     if (target) {
         target.classList.add('active');
-        target.style.display = "block";
+        target.style.display = 'block';
     }
+
+    // Update history state
+    history.pushState({ page: pageId }, '', `#${pageId}`);
+}
 
     // FIX: hide/show New Arrival page
     const newArrival = document.getElementById('newarrival');
@@ -812,4 +816,5 @@ document.addEventListener('DOMContentLoaded', () => {
     filterProducts();
 
 });
+
 
