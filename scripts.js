@@ -714,6 +714,44 @@ function decreaseQuantity() {
     if (q.value > 1) q.value = parseInt(q.value) - 1;
 }
 
+// Remove item from wishlist
+function removeFromWishlist(productId) {
+    // Remove the product from the wishlist array
+    wishlist = wishlist.filter(item => item.id !== productId);
+
+    // Update the wishlist display
+    displayWishlist();
+}
+
+// Function to render the wishlist page
+function displayWishlist() {
+    const container = document.getElementById('wishlist-products');
+    container.innerHTML = '';
+
+    if (wishlist.length === 0) {
+        container.innerHTML = `<p>Your wishlist is empty.</p>`;
+        return;
+    }
+
+    wishlist.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'wishlist-item';
+        card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>$${product.price.toFixed(2)}</p>
+            <button onclick="removeFromWishlist(${product.id})">Remove</button>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// Call displayWishlist when showing the wishlist page
+function showWishlistPage() {
+    showPage('wishlist');
+    displayWishlist();
+}
+
 function addToWishlist(productId) {
     const product = productsData.products.find(p => p.id === productId);
 
@@ -727,35 +765,6 @@ function addToWishlist(productId) {
     wishlist.push(productId);
     updateWishlistCount();
     alert(`Added ${product.name} to your wishlist!`);
-}
-
-
-function showWishlist() {
-    showPage('wishlist-page'); 
-
-    const container = document.getElementById("wishlist-items");
-    container.innerHTML = "";
-
-    if (wishlist.length === 0) {
-        container.innerHTML = `<p class="empty-msg">Your wishlist is empty ❤️</p>`;
-        return;
-    }
-
-    wishlist.forEach(id => {
-        const product = productsData.products.find(p => p.id === id);
-
-        container.innerHTML += `
-            <div class="wishlist-item">
-                <img src="${product.image}" class="wishlist-img">
-                <div class="wishlist-info">
-                    <h3>${product.name}</h3>
-                    <button class="remove-btn" onclick="removeFromWishlist(${id})">
-                        <i class="fas fa-trash"></i> Remove
-                    </button>
-                </div>
-            </div>
-        `;
-    });
 }
 
 function addToCart(productId) {
@@ -816,5 +825,6 @@ document.addEventListener('DOMContentLoaded', () => {
     filterProducts();
 
 });
+
 
 
