@@ -272,6 +272,7 @@ const productsPerPage = 8; // number of products per page
 let currentPage = 1;        // current page
 let currentProducts = [];   // currently displayed products
 let cart = [];
+let wishlist = [];
 
 function showPage(pageId) {
     // Hide all page screens
@@ -709,6 +710,22 @@ function decreaseQuantity() {
     if (q.value > 1) q.value = parseInt(q.value) - 1;
 }
 
+function addToWishlist(productId) {
+    const product = productsData.products.find(p => p.id === productId);
+
+    // Check if already in wishlist
+    const index = wishlist.indexOf(productId);
+    if (index !== -1) {
+        alert(`${product.name} is already in your wishlist.`);
+        return;
+    }
+
+    wishlist.push(productId);
+    updateWishlistCount();
+    alert(`Added ${product.name} to your wishlist!`);
+}
+
+
 function showWishlist() {
     showPage('wishlist-page'); 
 
@@ -795,3 +812,4 @@ document.addEventListener('DOMContentLoaded', () => {
     filterProducts();
 
 });
+
