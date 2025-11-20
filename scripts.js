@@ -290,7 +290,6 @@ function showPage(pageId) {
 
     // Update history state
     history.pushState({ page: pageId }, '', `#${pageId}`);
-}
 
     // FIX: hide/show New Arrival page
     const newArrival = document.getElementById('newarrival');
@@ -317,8 +316,8 @@ function showPage(pageId) {
     if (pageId === 'newarrival') loadNewProducts();
     if (pageId === 'sale') loadSaleProducts();
     if (pageId === 'aboutus') loadAboutUsPage();
-}
 
+}
 function displayProducts(products, containerId, page = 1) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
@@ -714,16 +713,49 @@ function decreaseQuantity() {
     if (q.value > 1) q.value = parseInt(q.value) - 1;
 }
 
-// Remove item from wishlist
-function removeFromWishlist(productId) {
-    // Remove the product from the wishlist array
-    wishlist = wishlist.filter(item => item.id !== productId);
-
-    // Update the wishlist display
+// Call displayWishlist when showing the wishlist page
+function showWishlistPage() {
+    showPage('wishlist');
     displayWishlist();
 }
 
-// Function to render the wishlist page
+function addToWishlist(productId) {
+    const product = productsData.products.find(p => p.id === productId);
+
+    // Check if already in wishlist
+    const exists = wishlist.some(item => item.id === productId);
+    if (exists) {
+        alert(`${product.name} is already in your wishlist.`);
+        return;
+    }
+
+    wishlist.push(product); // store FULL product object
+    updateWishlistCount();
+    alert(`Added ${product.name} to your wishlist!`);
+}
+
+function removeFromWishlist(productId) {
+    wishlist = wishlist.filter(item => item.id !== productId);
+    displayWishlist();
+}
+
+function addToCart(productId) {
+    const product = productsData.products.find(p => p.id === productId);
+    const qty = parseInt(document.getElementById('quantity')?.value || 1);
+
+    // check if item is already in cart
+    const existing = cart.find(item => item.id === productId);
+
+    if (existing) {
+        existing.qty += qty;
+    } else {
+        cart.push({ id: productId, qty: qty });
+    }
+
+    updateCartCount();
+    alert(`Added ${qty} x ${product.name} to cart!`);
+}
+
 function displayWishlist() {
     const container = document.getElementById('wishlist-products');
     container.innerHTML = '';
@@ -745,45 +777,6 @@ function displayWishlist() {
         container.appendChild(card);
     });
 }
-
-// Call displayWishlist when showing the wishlist page
-function showWishlistPage() {
-    showPage('wishlist');
-    displayWishlist();
-}
-
-function addToWishlist(productId) {
-    const product = productsData.products.find(p => p.id === productId);
-
-    // Check if already in wishlist
-    const index = wishlist.indexOf(productId);
-    if (index !== -1) {
-        alert(`${product.name} is already in your wishlist.`);
-        return;
-    }
-
-    wishlist.push(productId);
-    updateWishlistCount();
-    alert(`Added ${product.name} to your wishlist!`);
-}
-
-function addToCart(productId) {
-    const product = productsData.products.find(p => p.id === productId);
-    const qty = parseInt(document.getElementById('quantity')?.value || 1);
-
-    // check if item is already in cart
-    const existing = cart.find(item => item.id === productId);
-
-    if (existing) {
-        existing.qty += qty;
-    } else {
-        cart.push({ id: productId, qty: qty });
-    }
-
-    updateCartCount();
-    alert(`Added ${qty} x ${product.name} to cart!`);
-}
-
 
 function showCart() {
     showPage('cart-page');
@@ -825,6 +818,7 @@ document.addEventListener('DOMContentLoaded', () => {
     filterProducts();
 
 });
+
 
 
 
