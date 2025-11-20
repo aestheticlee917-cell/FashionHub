@@ -737,36 +737,23 @@ function showWishlist() {
     });
 }
 
-function showCart() {
-    showPage('cart-page');
+function addToCart(productId) {
+    const product = productsData.products.find(p => p.id === productId);
+    const qty = parseInt(document.getElementById('quantity')?.value || 1);
 
-    const container = document.getElementById("cart-items");
-    container.innerHTML = "";
+    // check if item is already in cart
+    const existing = cart.find(item => item.id === productId);
 
-    if (cart.length === 0) {
-        container.innerHTML = `<p class="empty-msg">Your cart is empty 🛒</p>`;
-        return;
+    if (existing) {
+        existing.qty += qty;
+    } else {
+        cart.push({ id: productId, qty: qty });
     }
 
-    cart.forEach(item => {
-        const product = productsData.products.find(p => p.id === item.id);
-
-        container.innerHTML += `
-            <div class="cart-item">
-                <img src="${product.image}" alt="">
-                <div class="cart-info">
-                    <h3>${product.name}</h3>
-                    <p>Quantity: ${item.qty}</p>
-                    <p>Total: $${(product.price * item.qty).toFixed(2)}</p>
-
-                    <button class="remove-btn" onclick="removeFromCart(${item.id})">
-                        <i class="fas fa-trash"></i> Remove
-                    </button>
-                </div>
-            </div>
-        `;
-    });
+    updateCartCount();
+    alert(`Added ${qty} x ${product.name} to cart!`);
 }
+
 
 function showCart() {
     showPage('cart-page');
@@ -806,4 +793,5 @@ function showCart() {
 document.addEventListener('DOMContentLoaded', () => {
     loadFeaturedProducts();
     filterProducts();
+
 });
